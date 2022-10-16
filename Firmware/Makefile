@@ -16,7 +16,8 @@ else
 endif
 
 ifneq (,$(findstring v3.,$(CONFIG_BOARD_VERSION)))
-  OPENOCD := openocd -f interface/stlink-v2.cfg $(PROGRAMMER_CMD) -f target/stm32f4x.cfg -c init
+#   OPENOCD := openocd -f interface/stlink-v2.cfg $(PROGRAMMER_CMD) -f target/stm32f4x.cfg -c init
+  OPENOCD := openocd -f openocd-jlink-swd.cfg -c init
   GDB := arm-none-eabi-gdb --ex 'target extended-remote | openocd -f "interface/stlink-v2.cfg" -f "target/stm32f4x.cfg" -c "gdb_port pipe; log_output openocd.log"' --ex 'monitor reset halt'
 else ifneq (,$(findstring v4.,$(CONFIG_BOARD_VERSION)))
   OPENOCD := openocd -f interface/stlink.cfg $(PROGRAMMER_CMD) -f target/stm32f7x.cfg -c 'reset_config none separate' -c init
@@ -62,7 +63,7 @@ libfibre-all:
 clean:
 	-rm -fR .dep $(BUILD_DIR)
 
-flash-stlink2: all
+flash-jlink: all
 	$(OPENOCD) \
 		-c 'reset halt' \
 		-c 'flash write_image erase $(FIRMWARE)' \
@@ -98,11 +99,11 @@ gdb-bmp: all
 dfu: all
 	python ../tools/odrivetool $(if $(value SERIAL_NUMBER),--serial-number $(SERIAL_NUMBER),) dfu $(FIRMWARE_HEX)
 
-flash: flash-stlink2
+flash: flash-jlink
 gdb: gdb-stlink2
 erase: erase-stlink2
 unlock: unlock-stlink2
 
-.PHONY: stlink2-config flash-stlink2 gdb-stlink2 erase-stlink2 unlock-stlink2
+.PHONY: stlink2-config flash-jlink gdb-stlink2 erase-stlink2 unlock-stlink2
 .PHONY: flash-bmp gdb-bmp
 .PHONY: all clean flash gdb erase unlock dfu fibre

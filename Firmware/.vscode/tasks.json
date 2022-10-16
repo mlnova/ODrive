@@ -19,7 +19,7 @@
             ]
         },
         {
-            "label": "flash - ST-Link",
+            "label": "flash - JLink",
             "type": "shell",
             "command": "make flash",
             "problemMatcher": []
