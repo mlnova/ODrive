@@ -9,11 +9,10 @@
             "type": "cortex-debug",
             "servertype": "openocd",
             "request": "launch",
-            "name": "Debug ODrive v3.x - ST-Link",
+            "name": "Debug ODrive v3.x - JLink",
             "executable": "${workspaceRoot}/build/ODriveFirmware.elf",
             "configFiles": [
-                "interface/stlink-v2.cfg",
-                "target/stm32f4x_stlink.cfg",
+                "openocd-jlink-swd.cfg",
             ],
             "svdFile": "${workspaceRoot}/Board/v3/STM32F40x.svd",
             "cwd": "${workspaceRoot}"
@@ -40,12 +39,11 @@
             "type": "cortex-debug",
             "servertype": "openocd",
             "request": "launch",
-            "name": "Debug ODrive v3.x - ST-Link - FreeRTOS",
+            "name": "Debug ODrive v3.x - JLink - FreeRTOS",
             "executable": "${workspaceRoot}/build/ODriveFirmware.elf",
             "rtos": "FreeRTOS",
             "configFiles": [
-                "interface/stlink-v2.cfg",
-                "target/stm32f4x_stlink.cfg",
+                "openocd-jlink-swd.cfg",
             ],
             "svdFile": "${workspaceRoot}/Board/v3/STM32F40x.svd",
             "cwd": "${workspaceRoot}"
@@ -63,8 +61,7 @@
             "name": "Debug ODrive v3.x - Remote",
             "executable": "${workspaceRoot}/build/ODriveFirmware.elf",
             "configFiles": [
-                "interface/stlink-v2.cfg",
-                "target/stm32f4x_stlink.cfg",
+                "openocd-jlink-swd.cfg",
             ],
             "svdFile": "${workspaceRoot}/Board/v3/STM32F40x.svd",
             "cwd": "${workspaceRoot}"
